@@ -2,6 +2,7 @@ package com.example.project1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +14,7 @@ import com.example.project1.DTO.LoginDto;
 import com.example.project1.DTO.MemberDto;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class MemberController {
 
     @GetMapping("/login")
-    public void getlogin() {
+    public void getlogin(LoginDto loginDto) {
         log.info("login 페이지 요청");
     }
 
@@ -37,9 +39,13 @@ public class MemberController {
     // log.info("userid : {} password {}", userid, password);
     // }
     @PostMapping("/login")
-    public String postlogin(@ModelAttribute("login") LoginDto loginDto) {
+    public String postlogin(@Valid LoginDto loginDto, BindingResult result) {
         log.info("login 요청 - 사용자 입력값 요청");
         log.info("userid : {} password {}", loginDto.getUserid(), loginDto.getPassword());
+
+        if (result.hasErrors()) {
+            return "/member/login";
+        }
 
         return "index.html";
     }
@@ -47,13 +53,17 @@ public class MemberController {
     // http://localhost:8080/
 
     @GetMapping("/register")
-    public void getregister() {
+    public void getregister(MemberDto memberDto) {
         log.info("register");
     }
 
     @PostMapping("/register")
-    public String postregister(MemberDto memberDto) {
+    public String postregister(@Valid MemberDto memberDto, BindingResult result) {
         log.info("회원가입요청 :{} ", memberDto);
+
+        if (result.hasErrors()) {
+            return "/member/register";
+        }
 
         return "redirect:/member/login"; // redirect : 경로
     }
