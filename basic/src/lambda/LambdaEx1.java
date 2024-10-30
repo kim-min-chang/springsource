@@ -41,5 +41,7 @@ public class LambdaEx1 {
     public static void main(String[] args) {
         Lambda1 obj = new Lambda1();
         System.out.println(obj.max(6, 3));
+
     }
+
 }

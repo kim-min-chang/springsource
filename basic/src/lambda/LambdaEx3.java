@@ -29,5 +29,6 @@ public class LambdaEx3 {
 
         Lambda5 obj2 = (x, y) -> x < y ? x : y;
         System.out.println("작은 수는 : " + obj2.min(15, 12));
+
     }
 }
