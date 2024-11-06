@@ -12,12 +12,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -30,13 +30,13 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "member", "orderItemList" })
+@ToString(exclude = { "member", "orderItemList", "delivery" })
 @Setter
 @Getter
 @Entity
 @Table(name = "mart_orders")
 @SequenceGenerator(name = "mart_order_seq_gen", sequenceName = "mart_order_seq", allocationSize = 1)
-public class Order {
+public class Order extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mart_order_seq_gen")
     @Column(name = "order_id")
@@ -60,5 +60,8 @@ public class Order {
     @Builder.Default
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItemList = new ArrayList<>();
+
+    @OneToOne
+    private Delivery delivery;
 
 }

@@ -1,7 +1,10 @@
 package com.example.mart.entity.sports;
 
+import com.example.mart.entity.item.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +27,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "sports_member")
 @SequenceGenerator(name = "sports_member_seq_gen", sequenceName = "sports_member_seq", allocationSize = 1)
-public class SportsMember {
+public class SportsMember extends BaseEntity {
 
     @Column(name = "member_id")
     @Id
@@ -33,6 +36,6 @@ public class SportsMember {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Locker locker;
 }
