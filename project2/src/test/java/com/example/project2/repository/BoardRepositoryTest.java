@@ -1,12 +1,18 @@
 package com.example.project2.repository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.example.project2.entity.Board;
+import com.example.project2.entity.Memo;
 
 @SpringBootTest
 public class BoardRepositoryTest {
@@ -14,23 +20,24 @@ public class BoardRepositoryTest {
     @Autowired
     private BoardRepository boardRepository;
 
+    // C(insert)
     @Test
     public void insertTest() {
-        IntStream.rangeClosed(1, 20)
-                .forEach(i -> {
-                    Board board = Board.builder()
-                            .title("제목" + i)
-                            .content("내용" + i)
-                            .wirter("김")
-                            .build();
-                    boardRepository.save(board);
-                });
+
+        IntStream.rangeClosed(1, 300).forEach(i -> {
+            Board board = Board.builder()
+                    .title("Title...." + i)
+                    .content("Content...." + i)
+                    .writer("user" + i)
+                    .build();
+            boardRepository.save(board);
+        });
     }
 
+    // R(Read)
     @Test
     public void selectOneTest() {
-        Board board = boardRepository.findById(15L).get();
-        System.out.println(board);
+        System.out.println(boardRepository.findById(6L));
     }
 
     @Test
@@ -38,17 +45,42 @@ public class BoardRepositoryTest {
         boardRepository.findAll().forEach(board -> System.out.println(board));
     }
 
+    // U
     @Test
     public void updateTest() {
         Board board = boardRepository.findById(5L).get();
-        board.setTitle("제목변경");
-        board.setWirter("작가변경");
-
+        board.setTitle("Update Title");
+        board.setContent("Update Content");
         boardRepository.save(board);
     }
 
+    // D
     @Test
     public void deleteTest() {
-        boardRepository.deleteById(20L);
+        boardRepository.deleteById(15L);
+    }
+
+    // 쿼리 메소드
+    @Test
+    public void testTitleList() {
+        // boardRepository.findByTitle("Title....").forEach(b -> System.out.println(b));
+        // boardRepository.findByTitleLike("Title").forEach(b -> System.out.println(b));
+        // boardRepository.findByTitleStartingWith("Title").forEach(b ->
+        // System.out.println(b));
+        // boardRepository.findByWriterEndingWith("1").forEach(b ->
+        // System.out.println(b));
+        boardRepository.findByWriterContainingOrTitleContaining("user",
+                "Title").forEach(b -> System.out.println(b));
+        // boardRepository.findByTitleContainingAndIdGreaterThan("Title", 10L).forEach(b
+        // -> System.out.println(b));
+        // boardRepository.findByIdGreaterThanOrderByIdDesc(10L).forEach(b ->
+        // System.out.println(b));
+
+        // pageNumber 0 : 1page 의미 , pageSize : 한페이지에 보여질 게시물 갯수
+        // Pageable pageable = PageRequest.of(1, 10);
+        // boardRepository.findByIdGreaterThanOrderByIdDesc(10L, pageable).forEach(b ->
+        // System.out.println(b));
+
+        // boardRepository.findByWriterList("user").forEach(b -> System.out.println(b));
     }
 }

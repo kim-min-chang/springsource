@@ -23,18 +23,16 @@ public class MemoRepositoryTest {
         LongStream.rangeClosed(1, 10).forEach(i -> {
 
             Memo memo = Memo.builder().memoText("Memo Text...." + i).build();
-
             System.out.println(memoRepository.save(memo));
         });
     }
 
-    // R(read)
+    // R(Read)
     @Test
     public void selectOneTest() {
         Optional<Memo> result = memoRepository.findById(5L);
 
         Memo memo = result.get();
-
         System.out.println(memo);
     }
 
@@ -44,11 +42,10 @@ public class MemoRepositoryTest {
 
         for (Memo memo : list) {
             System.out.println(memo);
-
         }
     }
 
-    // U(update)
+    // U
     @Test
     public void updateTest() {
         Optional<Memo> result = memoRepository.findById(5L);
@@ -59,7 +56,7 @@ public class MemoRepositoryTest {
         });
     }
 
-    // d(delete)
+    // D
     @Test
     public void deleteTest() {
         // Optional<Memo> result = memoRepository.findById(10L);
@@ -67,6 +64,7 @@ public class MemoRepositoryTest {
         // result.ifPresent(memo -> {
         // memoRepository.delete(memo);
         // });
+
         memoRepository.deleteById(3L);
     }
 }

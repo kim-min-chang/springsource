@@ -17,7 +17,7 @@ public class MemoRepositoryTest {
 
     @Test
     public void testMemoInsert() {
-        LongStream.rangeClosed(1, 10).forEach(i -> {
+        LongStream.rangeClosed(11, 90).forEach(i -> {
             Memo memo = Memo.builder().memoText("memo" + i).build();
             memoRepository.save(memo);
         });
@@ -47,4 +47,11 @@ public class MemoRepositoryTest {
         memoRepository.deleteById(10L);
     }
 
+    @Test
+    public void testMnoList() {
+        memoRepository.findByMnoLessThan(5L).forEach(m -> System.out.println(m));
+        memoRepository.findByMnoLessThanOrderByMnoDesc(10L).forEach(m -> System.out.println(m));
+        memoRepository.findByMnoBetween(50L, 100L).forEach(m -> System.out.println(m));
+
+    }
 }

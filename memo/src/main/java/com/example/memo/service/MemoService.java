@@ -2,15 +2,11 @@ package com.example.memo.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.example.memo.dto.MemoDto;
 import com.example.memo.entity.Memo;
 
-@Service
 public interface MemoService {
     // crud 메소드
-
     Long create(MemoDto dto);
 
     MemoDto read(Long id);
@@ -21,21 +17,21 @@ public interface MemoService {
 
     void delete(Long id);
 
-    // dto ==> entity변환
+    // dto ==> entity
     public default Memo dtoToEntity(MemoDto dto) {
         return Memo.builder()
-                .mno(dto.getId())
+                .mno(dto.getMno())
                 .memoText(dto.getMemoText())
                 .build();
     }
 
-    // entity ==> dto 변환
+    // entity ==> dto
     public default MemoDto entityToDto(Memo memo) {
         return MemoDto.builder()
-                .id(memo.getMno())
+                .mno(memo.getMno())
                 .memoText(memo.getMemoText())
                 .createdDateTime(memo.getCreatedDateTime())
-                .lastModifiedDateTime(memo.getLastModifideDateTime())
+                .lastModifiedDateTime(memo.getLastModifiedDateTime())
                 .build();
     }
 }

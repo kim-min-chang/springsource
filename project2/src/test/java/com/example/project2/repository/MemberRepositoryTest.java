@@ -3,6 +3,7 @@ package com.example.project2.repository;
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
+import org.antlr.v4.runtime.misc.IntSet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,6 @@ public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    // C
     @Test
     public void insertTest() {
         // Member member = Member.builder()
@@ -53,17 +53,17 @@ public class MemberRepositoryTest {
 
     @Test
     public void updateTest() {
+        // save() : insert or update
         // Member member = Member.builder()
         // .id("user8")
+        // .username("user8")
         // .age(28)
         // .roleType(RoleType.ADMIN)
-        // .username("user8")
         // .lastModifiedDate(LocalDateTime.now())
         // .build();
         Member member = memberRepository.findById("user9").get();
         member.setRoleType(RoleType.ADMIN);
         member.setLastModifiedDate(LocalDateTime.now());
-
         memberRepository.save(member);
     }
 
@@ -71,5 +71,6 @@ public class MemberRepositoryTest {
     public void deleteTest() {
         // memberRepository.delete(null);
         memberRepository.deleteById("user10");
+
     }
 }

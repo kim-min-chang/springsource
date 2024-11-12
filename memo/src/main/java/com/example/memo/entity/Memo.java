@@ -1,7 +1,5 @@
 package com.example.memo.entity;
 
-import com.example.memo.dto.MemoDto;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,12 +17,12 @@ import lombok.NoArgsConstructor;
 //Long => number(19), String => varchar2(255)
 //int => number(10)
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @SequenceGenerator(name = "memo_seq_gen", sequenceName = "memo_seq", allocationSize = 1)
 @Entity
-@Builder
 public class Memo extends BaseEntity {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memo_seq_gen")

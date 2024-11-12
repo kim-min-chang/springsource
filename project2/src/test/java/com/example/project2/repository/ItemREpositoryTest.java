@@ -6,14 +6,13 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cglib.core.Local;
 
 import com.example.project2.entity.Item;
 import com.example.project2.entity.constant.ItemStatus;
 
-import jakarta.persistence.Column;
-
 @SpringBootTest
-public class ItemREpositoryTest {
+public class ItemRepositoryTest {
 
     @Autowired
     private ItemRepository itemRepository;
@@ -36,29 +35,29 @@ public class ItemREpositoryTest {
     @Test
     public void selectOneTest() {
         // id가 5인 운동화 조회
-        Item item = itemRepository.findById(5L).get();
-        System.out.println(item);
+        System.out.println(itemRepository.findById(5L).get());
     }
 
     @Test
     public void selectAllTest() {
-        itemRepository.findAll().forEach(member -> System.out.println(member));
+        // 전체 운동화 조회
+        itemRepository.findAll().forEach(item -> System.out.println(item));
     }
 
     @Test
     public void updateTest() {
-        // id가 6 인 운동화 업데이트
-        // 가격 90000, updateTime
+        // id 가 6 인 운동화 업데이트
+        // 가격, updateTime
         Item item = itemRepository.findById(6L).get();
+        item.setPrice(105000);
         item.setUpdateTime(LocalDateTime.now());
-        item.setPrice(90000);
-
         itemRepository.save(item);
     }
 
     @Test
     public void deleteTest() {
-        // id가 9인 운동화 삭제
+        // id 가 9 인 운동화 삭제
         itemRepository.deleteById(9L);
     }
+
 }
