@@ -1,10 +1,10 @@
-package com.example.mart;
+package com.example.guestbook;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MartApplicationTests {
+class GuestbookApplicationTests {
 
 	@Test
 	void contextLoads() {

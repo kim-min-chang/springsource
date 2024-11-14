@@ -11,15 +11,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Setter
-@Getter
-@ToString
+@DiscriminatorValue("A")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("A")
+@ToString
+@Getter
+@Setter
+@Entity
 public class Album extends Item {
     private String artist;
-
 }

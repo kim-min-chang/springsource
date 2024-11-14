@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -23,17 +24,19 @@ import lombok.ToString;
 @ToString(exclude = "sportsMember")
 @Setter
 @Getter
-@Entity
-@Table(name = "sports_locker")
 @SequenceGenerator(name = "sports_locker_seq_gen", sequenceName = "locker_seq", allocationSize = 1)
+@Table(name = "sports_locker")
+@Entity
 public class Locker extends BaseEntity {
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sports_locker_seq_gen")
     @Column(name = "locker_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sports_locker_seq_gen")
     private Long id;
 
     private String name;
 
+    // 양방향
     @OneToOne(mappedBy = "locker")
     private SportsMember sportsMember;
 }

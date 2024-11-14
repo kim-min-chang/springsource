@@ -11,16 +11,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Setter
-@Getter
-@ToString
+@DiscriminatorValue("M")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("M")
+@ToString
+@Getter
+@Setter
+@Entity
 public class Movie extends Item {
     private String director;
     private String actor;
-
 }

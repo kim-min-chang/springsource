@@ -24,18 +24,22 @@ import lombok.ToString;
 @ToString(exclude = "orders")
 @Setter
 @Getter
+@SequenceGenerator(name = "mart_member_seq_gen", sequenceName = "mart_member_seq", allocationSize = 1)
 @Table(name = "mart_member")
 @Entity
-@SequenceGenerator(name = "mart_member_seq_gen", sequenceName = "mart_member_seq", allocationSize = 1)
 public class Member extends BaseEntity {
+
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mart_member_seq_gen")
     @Column(name = "member_id")
     @Id
     private Long id;
 
     private String name;
+
     private String zipcode;
+
     private String city;
+
     private String street;
 
     @Builder.Default

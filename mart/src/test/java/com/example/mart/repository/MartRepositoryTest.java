@@ -198,7 +198,7 @@ public class MartRepositoryTest {
         Order order = orderRepository.findById(2L).get();
         System.out.println(order);
         // Order==> OrderItem 탐색 시도
-        order.getOrderItemList().forEach(orderItem -> System.out.println(orderItem));
+        order.getOrderItemsList().forEach(orderItem -> System.out.println(orderItem));
 
     }
 

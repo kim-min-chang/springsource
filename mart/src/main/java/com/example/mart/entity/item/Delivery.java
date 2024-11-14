@@ -20,25 +20,26 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(exclude = "order")
-@Setter
 @Getter
-@Entity
+@Setter
 @Table(name = "mart_delivery")
-@SequenceGenerator(name = "mart_delivery_seq_gen", sequenceName = "mart_delivery_seq", allocationSize = 1)
+@Entity
 public class Delivery extends BaseEntity {
 
+    @SequenceGenerator(name = "mart_delivery_seq_gen", sequenceName = "mart_delivery_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mart_delivery_seq_gen")
-    @Column(name = "delivery_id")
     @Id
     private Long id;
 
     @Column(nullable = false)
     private String city;
+
     @Column(nullable = false)
     private String street;
+
     @Column(nullable = false)
     private String zipcode;
 
@@ -47,5 +48,4 @@ public class Delivery extends BaseEntity {
 
     @OneToOne(mappedBy = "delivery")
     private Order order;
-
 }

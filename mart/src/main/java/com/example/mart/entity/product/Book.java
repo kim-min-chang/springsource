@@ -11,16 +11,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Setter
-@Getter
-@ToString
+@DiscriminatorValue("B")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("B")
+@ToString
+@Getter
+@Setter
+@Entity
 public class Book extends Item {
     private String author;
     private String isbn;
-
 }
