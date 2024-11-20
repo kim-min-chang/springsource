@@ -15,6 +15,8 @@ import com.example.project1.DTO.LoginDto;
 import com.example.project1.DTO.SampleDto;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Log4j2
 @Controller
@@ -62,4 +64,11 @@ public class HomeController {
 
         return "index";
     }
+
+    @ResponseBody
+    @GetMapping("/test")
+    public String getTest() {
+        return "반갑습니다.";
+    }
+
 }

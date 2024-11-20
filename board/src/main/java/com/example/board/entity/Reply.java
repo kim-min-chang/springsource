@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@ToString
+@ToString(exclude = "board")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
