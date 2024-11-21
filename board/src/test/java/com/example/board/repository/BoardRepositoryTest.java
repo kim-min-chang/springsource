@@ -11,11 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 
 import com.example.board.entity.Board;
 import com.example.board.entity.Member;
 import com.example.board.entity.Reply;
+import com.example.board.entity.constant.MemberRole;
 
 import jakarta.transaction.Transactional;
 
@@ -28,6 +30,8 @@ public class BoardRepositoryTest {
     private MemberRepository memberRepository;
     @Autowired
     private ReplyRepository replyRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void testInsertMember() {
@@ -36,7 +40,8 @@ public class BoardRepositoryTest {
             Member member = Member.builder()
                     .email("user" + i + "@google.com")
                     .name("user" + i)
-                    .password("1111")
+                    .password(passwordEncoder.encode("1111"))
+                    .role(MemberRole.MEMBER)
                     .build();
             memberRepository.save(member);
         });
@@ -47,9 +52,9 @@ public class BoardRepositoryTest {
     public void testInsertBoard() {
         // 100개
 
-        int num = (int) (Math.random() * 30) + 1;
-        Member member = memberRepository.findById("user" + num + "@google.com").get();
-        IntStream.rangeClosed(21, 100).forEach(i -> {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
+            int num = (int) (Math.random() * 30) + 1;
+            Member member = memberRepository.findById("user" + num + "@google.com").get();
             Board board = Board.builder()
                     .title("title" + i)
                     .content("content" + i)

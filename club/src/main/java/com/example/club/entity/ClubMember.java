@@ -1,6 +1,5 @@
 package com.example.club.entity;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,5 +48,5 @@ public class ClubMember extends BaseEntity {
 }
 
 // @ElementCollection : 개념상 1:N 관계
-// 엔티티의 기본 키를 PK 겸 FK 로 사용
+// 엔티티의 기본 키를 PK 겸 FK로 사용
 // 부모 삭제 시 자식도 삭제

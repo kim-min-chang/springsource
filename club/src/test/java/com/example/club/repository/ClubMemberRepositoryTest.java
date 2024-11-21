@@ -35,6 +35,7 @@ public class ClubMemberRepositoryTest {
             if (i > 80) {
                 clubMember.addMemberRole(ClubRole.MANAGER);
             }
+
             if (i > 90) {
                 clubMember.addMemberRole(ClubRole.ADMIN);
             }
@@ -42,10 +43,14 @@ public class ClubMemberRepositoryTest {
         });
     }
 
+    // @Transactional
     @Test
     public void testFind() {
+
         // 회원조회
         // System.out.println(clubMemberRepository.findById("user17@gmail.com").get());
+
         System.out.println(clubMemberRepository.findByEmailAndFromSocial("user17@gmail.com", false));
+
     }
 }
