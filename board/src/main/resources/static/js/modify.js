@@ -15,5 +15,6 @@ document.querySelector(".btn-info").addEventListener("click", (e) => {
   // actionForm method 수정(get)
   actionForm.method = "get";
   actionForm.querySelector("[name='bno']").remove();
+  actionForm.querySelector("[name='writerEmail']").remove();
   actionForm.submit();
 });
