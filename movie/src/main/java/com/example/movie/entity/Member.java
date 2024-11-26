@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,29 +18,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Table(name = "M_Member")
-@Entity
-@ToString
-@Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Getter
+@Setter
+@ToString
+@Entity
+@Table(name = "M_Member")
 public class Member extends BaseEntity {
 
+    // mid(seq), email, password, nickname, role
     @Id
     @SequenceGenerator(name = "movie_member_seq_gen", sequenceName = "movie_member_seq", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_member_seq_gen")
     private Long mid;
 
-    @Email
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
-
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    private MemberRole Role;
+    private MemberRole role;
+
 }

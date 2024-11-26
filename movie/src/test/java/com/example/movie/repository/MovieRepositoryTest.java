@@ -10,23 +10,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 import com.example.movie.entity.Movie;
 import com.example.movie.entity.MovieImage;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootTest
 public class MovieRepositoryTest {
 
     @Autowired
     private MovieRepository movieRepository;
+
     @Autowired
     private MovieImageRepository movieImageRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Test
     public void testMovieInsert() {
-
         IntStream.rangeClosed(1, 50).forEach(i -> {
-            Movie movie = Movie.builder().title("Movie" + i).build();
+            Movie movie = Movie.builder().title("Movie " + i).build();
             movieRepository.save(movie);
 
             // 임의의 숫자 1~5
@@ -34,13 +40,12 @@ public class MovieRepositoryTest {
 
             for (int j = 0; j < count; j++) {
                 MovieImage movieImage = MovieImage.builder()
-                        .imgName("test" + i + ".jpg")
                         .uuid(UUID.randomUUID().toString())
+                        .imgName("test" + j + ".jpg")
                         .movie(movie)
                         .build();
                 movieImageRepository.save(movieImage);
             }
-
         });
     }
 
@@ -54,6 +59,22 @@ public class MovieRepositoryTest {
         for (Object[] objects : result) {
             System.out.println(Arrays.toString(objects));
         }
+    }
+
+    @Transactional
+    @Test
+    public void testRemove() {
+        Movie movie = Movie.builder().mno(50L).build();
+        movieImageRepository.deleteByMovie(movie);
+        reviewRepository.deleteByMovie(movie);
+        movieRepository.delete(movie);
+    }
+
+    @Transactional
+    @Test
+    public void testRemove2() {
+
+        movieRepository.deleteById(50L);
     }
 
 }

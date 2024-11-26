@@ -1,5 +1,6 @@
 package com.example.movie.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -28,6 +29,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public PageResultDto<MovieDto, Object[]> getList(PageRequestDto pageRequestDto) {
+
         Pageable pageable = pageRequestDto.getPageable(Sort.by("mno").descending());
 
         Page<Object[]> result = movieImageRepository.getTotalList(null, null, pageable);
@@ -59,8 +61,20 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDto get(Long mno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        List<Object[]> result = movieImageRepository.getMovieRow(mno);
+        Movie movie = (Movie) result.get(0)[0];
+        Long rCnt = (Long) result.get(0)[2];
+        Double avg = (Double) result.get(0)[3];
+
+        // 1 : 영화 이미지
+        List<MovieImage> movieImages = new ArrayList<>();
+        result.forEach(row -> {
+            MovieImage movieImage = (MovieImage) row[1];
+            movieImages.add(movieImage);
+        });
+
+        return entityToDto(movie, movieImages, rCnt, avg);
+
     }
 
 }

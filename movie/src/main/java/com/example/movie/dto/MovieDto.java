@@ -9,10 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Data
 public class MovieDto {
 
     private Long mno;
@@ -21,9 +21,11 @@ public class MovieDto {
     // 영화에 소속된 이미지 가져오기
     @Builder.Default
     private List<MovieImageDto> movieImageDtos = new ArrayList<>();
+
     // 영화 평점 평균
-    private Double reviewAvg;
-    // 영화 평점 수
+    private double reviewAvg;
+
+    // 영화 평점 개수
     private Long reviewCnt;
 
     private LocalDateTime regDate;

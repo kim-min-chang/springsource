@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReviewDto {
 
     private Long reviewNo;
@@ -19,13 +19,13 @@ public class ReviewDto {
 
     private String text;
 
-    // movie 의 mno 담기
+    // Movie의 mno 담기
     private Long mno;
 
-    // member mid, nickname,email
+    // Member mid,nickname,email
     private Long mid;
-    private String nickname;
     private String email;
+    private String nickname;
 
     private LocalDateTime regDate;
     private LocalDateTime updateDate;

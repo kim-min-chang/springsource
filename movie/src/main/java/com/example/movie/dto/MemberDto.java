@@ -9,17 +9,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Data
 public class MemberDto {
-
     private Long mid;
+
     private String email;
+
     private String password;
     private String nickname;
-    private MemberRole Role;
+
+    private MemberRole role;
 
     private LocalDateTime regDate;
     private LocalDateTime updateDate;
