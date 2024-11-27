@@ -48,16 +48,8 @@ public class MovieImageRepositoryTest {
         List<Object[]> result = movieImageRepository.getMovieRow(1L);
 
         for (Object[] objects : result) {
-            // System.out.println(Arrays.toString(objects));
-            Movie movie = (Movie) objects[0];
-            MovieImage movieImage = (MovieImage) objects[1];
-            Long count = (Long) objects[2];
-            Double avg = (Double) objects[3];
-
-            System.out.println(movie);
-            System.out.println(movieImage);
-            System.out.println(count);
-            System.out.println(avg);
+            System.out.println(Arrays.toString(objects));
         }
     }
+
 }

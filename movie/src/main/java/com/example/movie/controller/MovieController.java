@@ -7,15 +7,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.movie.dto.MovieDto;
 import com.example.movie.dto.PageRequestDto;
 import com.example.movie.dto.PageResultDto;
 import com.example.movie.service.MovieService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
@@ -41,7 +41,6 @@ public class MovieController {
         log.info("영화 상세 정보 요청 {}", mno);
 
         MovieDto movieDto = movieService.get(mno);
-
         model.addAttribute("movieDto", movieDto);
     }
 
@@ -56,8 +55,13 @@ public class MovieController {
         rttr.addAttribute("size", pageRequestDto.getSize());
         rttr.addAttribute("type", pageRequestDto.getType());
         rttr.addAttribute("keyword", pageRequestDto.getKeyword());
-
         return "redirect:/movie/list";
+    }
+
+    @GetMapping("/create")
+    public void getCreate(@ModelAttribute("requestDto") PageRequestDto pageRequestDto) {
+        log.info("영화 작성 폼 요청");
+
     }
 
 }

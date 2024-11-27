@@ -82,6 +82,7 @@ public class MovieImageReviewRepositoryImpl extends QuerydslRepositorySupport im
 
     @Override
     public List<Object[]> getMovieRow(Long mno) {
+
         QMovieImage movieImage = QMovieImage.movieImage;
         QReview review = QReview.review;
         QMovie movie = QMovie.movie;
