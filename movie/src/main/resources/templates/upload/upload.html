@@ -18,31 +18,27 @@
       <input type="text" name="name" id="">
     </form> -->
 
-    <input
-      type="file"
-      name="uploadFiles"
-      id=""
-      multiple
-      accept="image/png, image/jpeg"
-    />
+    <input type="file" name="uploadFiles" id="" multiple accept="image/png, image/jpeg" />
     <button id="uploadBtn">업로드</button>
     <div id="output"></div>
     <script>
-      // x를 누르면 삭제 요청
+      // x 를 누르면 삭제 요청 => 부모 이벤트
       document.querySelector("#output").addEventListener("click", (e) => {
         // a 태그 기능 중지
-        e.preventDefault;
+        e.preventDefault();
+        // x 가 눌러진 태그 요소 찾기
+        console.log("e.target(실제 이벤트 대상) ", e.target);
+        console.log("e.currentTarget(이벤트 대상의 부모) ", e.currentTarget);
         // href 값 가져오기
-        console.log("e.target", e.target);
-        console.log("e.currentTarget", e.currentTarget);
-        // 이미지 삭제
-        const removeDiv = e.target.closest("div");
-        // x가 눌러진 태그 요소 찾기
         const element = e.target.closest("a");
         console.log(element);
         console.log(element.href);
         console.log(element.getAttribute("href"));
-        // 삭제할 이미지 경로 추출
+
+        // 이미지 삭제
+        const removeDiv = e.target.closest("div");
+
+        // 삭제 할 이미지 경로 추출
         const filePath = element.getAttribute("href");
 
         let formData = new FormData();
@@ -54,28 +50,26 @@
         })
           .then((response) => {
             if (!response.ok) throw new Error("에러 발생");
-            return response.text;
+
+            return response.text();
           })
           .then((data) => {
-            //화면 이미지 제거
+            // 화면 이미지 제거
             if (data) removeDiv.remove();
           });
       });
 
       function showUploadImages(files) {
         const output = document.querySelector("#output");
-        array.forEach((file) => {
-          let tags = "";
+
+        let tags = "";
+        files.forEach((file) => {
           tags += `<div>`;
           tags += `<img src="/upload/display?fileName=${file.thumbImageURL}">`;
-          tags += `<a href="${file.imageURL}"><i class="fa-solid fa-x"></i>`;
+          tags += `<a href="${file.imageURL}"><i class="fa-solid fa-xmark"></i></a>`;
           tags += `</div>`;
-
-          output.insertAdjacentHTML(
-            "beforeend",
-            `<img src= "/upload/display?fileName=${file.imageURL}">`
-          );
         });
+        output.insertAdjacentHTML("beforeend", tags);
       }
 
       document.querySelector("#uploadBtn").addEventListener("click", () => {
