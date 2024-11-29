@@ -19,7 +19,6 @@ import com.example.movie.dto.PageResultDto;
 import com.example.movie.service.MovieService;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Log4j2

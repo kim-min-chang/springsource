@@ -21,7 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Override
-    public List<ReviewDto> getReviewDtos(Long mno) {
+    public List<ReviewDto> getReviews(Long mno) {
         Movie movie = Movie.builder().mno(mno).build();
         List<Review> result = reviewRepository.findByMovie(movie);
 
@@ -30,26 +30,30 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto getReviewDto(Long reviewNo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getReviewDto'");
+        return entityToDto(reviewRepository.findById(reviewNo).get());
     }
 
     @Override
     public Long addReview(ReviewDto reviewDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addReview'");
+
+        Review review = dtoToEntity(reviewDto);
+
+        return reviewRepository.save(review).getReviewNo();
     }
 
     @Override
     public Long modifyReview(ReviewDto reviewDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modifyReview'");
+
+        Review review = reviewRepository.findById(reviewDto.getReviewNo()).get();
+        review.setText(reviewDto.getText());
+        review.setGrade(reviewDto.getGrade());
+
+        return reviewRepository.save(review).getReviewNo();
     }
 
     @Override
-    public void removeReview(ReviewDto reviewDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeReview'");
+    public void removeReview(Long reviewNo) {
+        reviewRepository.deleteById(reviewNo);
     }
 
 }

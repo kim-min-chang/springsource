@@ -9,7 +9,7 @@ import com.example.movie.entity.Review;
 
 public interface ReviewService {
     // movie 번호를 이용해 특정 영화의 모든 리뷰 조회
-    List<ReviewDto> getReviewDtos(Long mno);
+    List<ReviewDto> getReviews(Long mno);
 
     // 특정 리뷰 조회
     ReviewDto getReviewDto(Long reviewNo);
@@ -18,7 +18,7 @@ public interface ReviewService {
 
     Long modifyReview(ReviewDto reviewDto);
 
-    void removeReview(ReviewDto reviewDto);
+    void removeReview(Long reviewNo);
 
     default ReviewDto entityToDto(Review review) {
         ReviewDto reviewDto = ReviewDto.builder()
