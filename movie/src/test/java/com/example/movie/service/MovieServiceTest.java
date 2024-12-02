@@ -28,7 +28,6 @@ public class MovieServiceTest {
                 .type("t")
                 .keyword("Movie")
                 .build();
-
         PageResultDto<MovieDto, Object[]> result = movieService.getList(requestDto);
         System.out.println(result.getDtoList());
     }

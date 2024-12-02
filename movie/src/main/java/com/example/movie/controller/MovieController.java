@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.movie.dto.MovieDto;
@@ -19,6 +20,8 @@ import com.example.movie.dto.PageResultDto;
 import com.example.movie.service.MovieService;
 
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -49,6 +52,7 @@ public class MovieController {
     @PostMapping("/modify")
     public String postModify(MovieDto movieDto, @ModelAttribute("requestDto") PageRequestDto pageRequestDto,
             RedirectAttributes rttr) {
+
         log.info("영화 정보 수정 {}", movieDto);
 
         Long mno = movieService.modify(movieDto);

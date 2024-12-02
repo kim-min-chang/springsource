@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableMethodSecurity
 @EnableWebSecurity
@@ -18,10 +19,12 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "assets/**", "/css/**", "/js/**", "/upload/**").permitAll()
+                .requestMatchers("/", "/assets/**", "/css/**", "/js/**", "/upload/**").permitAll()
                 .requestMatchers("/movie/list").permitAll()
                 .anyRequest().authenticated());
-        http.formLogin(login -> login.loginPage("/member/login").permitAll());
+        http.formLogin(login -> login.loginPage("/member/login").permitAll().defaultSuccessUrl("/movie/list"));
+        http.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessUrl("/"));
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
@@ -34,5 +37,4 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
 }

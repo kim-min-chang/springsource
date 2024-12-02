@@ -44,14 +44,14 @@ public class ReviewRepositoryTest {
                     .member(member)
                     .build();
             reviewRepository.save(review);
-        });
 
+        });
     }
 
     // @Transactional
     @Test
-    public void textGet() {
-        Movie movie = Movie.builder().mno(48L).build();
+    public void testGet() {
+        Movie movie = movieRepository.findById(45L).get();
         List<Review> list = reviewRepository.findByMovie(movie);
         // System.out.println(list);
         list.forEach(review -> {

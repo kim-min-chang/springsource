@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.example.movie.entity.Member;
 import com.example.movie.entity.constant.MemberRole;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 public class MemberRepositoryTest {
 
@@ -31,6 +33,22 @@ public class MemberRepositoryTest {
 
             memberRepository.save(member);
         });
+    }
+
+    @Test
+    public void testUpdate() {
+
+        Member member = memberRepository.findById(2L).get();
+
+        member.setNickname("null");
+
+        memberRepository.save(member);
+    }
+
+    @Transactional
+    @Test
+    public void testUpdate2() {
+        memberRepository.updateNickName("nick", "user3@naver.com");
     }
 
 }

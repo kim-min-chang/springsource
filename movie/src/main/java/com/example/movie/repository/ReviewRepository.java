@@ -21,5 +21,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     // movie_mno 를 이용해 리뷰 가져오기
     @EntityGraph(attributePaths = "member", type = EntityGraphType.FETCH)
     List<Review> findByMovie(Movie movie);
-
 }

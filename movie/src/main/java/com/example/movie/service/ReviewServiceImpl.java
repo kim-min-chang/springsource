@@ -13,8 +13,8 @@ import com.example.movie.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@RequiredArgsConstructor
 @Log4j2
+@RequiredArgsConstructor
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -29,7 +29,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto getReviewDto(Long reviewNo) {
+    public ReviewDto getReview(Long reviewNo) {
         return entityToDto(reviewRepository.findById(reviewNo).get());
     }
 
@@ -47,7 +47,6 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(reviewDto.getReviewNo()).get();
         review.setText(reviewDto.getText());
         review.setGrade(reviewDto.getGrade());
-
         return reviewRepository.save(review).getReviewNo();
     }
 

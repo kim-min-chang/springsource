@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 public class MovieDto {
 
     private Long mno;
-    @NotBlank(message = "영화명은 필수 요소입니다.")
+
+    @NotBlank(message = "영화명은 필수요소입니다.")
     private String title;
 
     // 영화에 소속된 이미지 가져오기

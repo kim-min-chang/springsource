@@ -1,14 +1,17 @@
 package com.example.movie.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,11 +27,13 @@ import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.movie.dto.UploadResultDto;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Log4j2
 @RequestMapping("/upload")
@@ -96,10 +101,11 @@ public class UploadController {
         try {
             // "2024%2F11%2F27%5C7e9547c0-ba45-463b-a4ae-59a35d92962a_seoul1.jpg"
             String srcFileName = URLDecoder.decode(fileName, "utf-8");
-            // "upload/2024/11/27/C7e9547c0-ba45-463b-a4ae-59a35d92962a_seoul1.jpg"
+            // upload/2024/11/27/s_C7e9547c0-ba45-463b-a4ae-59a35d92962a_seoul1.jpg
             File file = new File(uploadPath + File.separator + srcFileName);
 
             if (size != null && size.equals("1")) {
+                // upload/2024/11/27/, 원본파일명
                 file = new File(file.getParent(), file.getName().substring(2));
             }
 

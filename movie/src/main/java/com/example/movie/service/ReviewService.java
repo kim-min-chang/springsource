@@ -8,11 +8,12 @@ import com.example.movie.entity.Movie;
 import com.example.movie.entity.Review;
 
 public interface ReviewService {
+
     // movie 번호를 이용해 특정 영화의 모든 리뷰 조회
     List<ReviewDto> getReviews(Long mno);
 
     // 특정 리뷰 조회
-    ReviewDto getReviewDto(Long reviewNo);
+    ReviewDto getReview(Long reviewNo);
 
     Long addReview(ReviewDto reviewDto);
 
@@ -21,7 +22,8 @@ public interface ReviewService {
     void removeReview(Long reviewNo);
 
     default ReviewDto entityToDto(Review review) {
-        ReviewDto reviewDto = ReviewDto.builder()
+        ReviewDto reviewDto = ReviewDto
+                .builder()
                 .reviewNo(review.getReviewNo())
                 .grade(review.getGrade())
                 .text(review.getText())
@@ -37,15 +39,12 @@ public interface ReviewService {
     }
 
     default Review dtoToEntity(ReviewDto reviewDto) {
-        Review review = Review.builder()
+        return Review.builder()
                 .reviewNo(reviewDto.getReviewNo())
                 .grade(reviewDto.getGrade())
                 .text(reviewDto.getText())
                 .member(Member.builder().mid(reviewDto.getMid()).build())
                 .movie(Movie.builder().mno(reviewDto.getMno()).build())
                 .build();
-
-        return review;
     }
-
 }
