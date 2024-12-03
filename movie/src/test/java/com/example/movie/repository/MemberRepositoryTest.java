@@ -19,6 +19,8 @@ public class MemberRepositoryTest {
     private MemberRepository memberRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void testInsert() {
@@ -39,16 +41,23 @@ public class MemberRepositoryTest {
     public void testUpdate() {
 
         Member member = memberRepository.findById(2L).get();
-
-        member.setNickname("null");
-
+        member.setNickname("flower");
         memberRepository.save(member);
     }
 
     @Transactional
     @Test
     public void testUpdate2() {
-        memberRepository.updateNickName("nick", "user3@naver.com");
+
+        memberRepository.updateNickName("test", "user3@naver.com");
+
     }
 
+    @Transactional
+    @Test
+    public void testDelete() {
+        reviewRepository.deleteByMember(Member.builder().mid(49L).build());
+        memberRepository.deleteById(49L);
+
+    }
 }

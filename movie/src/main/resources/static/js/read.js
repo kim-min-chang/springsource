@@ -101,7 +101,9 @@ reviewForm.addEventListener("submit", (e) => {
           reviewForm.email.value = "";
           reviewForm.nickname.value = "";
           reviewForm.text.value = "";
-          reviewForm.querySelector(".starrr a:nth-child(" + grade + ")").click();
+          reviewForm
+            .querySelector(".starrr a:nth-child(" + grade + ")")
+            .click();
           reviewLoaded();
         }
       });
@@ -125,8 +127,11 @@ reviewForm.addEventListener("submit", (e) => {
           reviewForm.email.value = "";
           reviewForm.nickname.value = "";
           reviewForm.text.value = "";
-          reviewForm.querySelector(".starrr a:nth-child(" + grade + ")").click();
-          reviewForm.querySelector(".btn-outline-danger").innerHTML = "리뷰 등록";
+          reviewForm
+            .querySelector(".starrr a:nth-child(" + grade + ")")
+            .click();
+          reviewForm.querySelector(".btn-outline-danger").innerHTML =
+            "리뷰 등록";
 
           reviewLoaded();
         }
@@ -169,7 +174,9 @@ reviewList.addEventListener("click", (e) => {
         reviewForm.nickname.value = `${data.nickname}`;
         reviewForm.text.value = `${data.text}`;
 
-        reviewForm.querySelector(".starrr a:nth-child(" + data.grade + ")").click();
+        reviewForm
+          .querySelector(".starrr a:nth-child(" + data.grade + ")")
+          .click();
 
         reviewForm.querySelector(".btn-outline-danger").innerHTML = "리뷰 수정";
       });

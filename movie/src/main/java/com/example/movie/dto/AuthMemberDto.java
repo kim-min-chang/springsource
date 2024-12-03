@@ -11,9 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
 @ToString
+@Setter
+@Getter
 public class AuthMemberDto extends User {
 
     private MemberDto memberDto;
@@ -27,5 +27,4 @@ public class AuthMemberDto extends User {
                 List.of(new SimpleGrantedAuthority("ROLE_" + memberDto.getRole())));
         this.memberDto = memberDto;
     }
-
 }
