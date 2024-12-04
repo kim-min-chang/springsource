@@ -29,4 +29,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, QuerydslPredi
 
         return builder;
     }
+
 }

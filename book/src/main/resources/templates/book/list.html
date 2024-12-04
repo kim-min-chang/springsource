@@ -6,6 +6,11 @@
 
   <div layout:fragment="content" class="container">
     <h1>도서 전체 목록</h1>
+    <div class="select">
+      <a class="text" name="text">소설</a>
+      <a class="soc" name="soc">경제</a>
+      <a class="trip" name="trip">여행</a>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -66,11 +71,13 @@
   </div>
   <th:block layout:fragment="script">
     <script>
+      const dto = bookDto;
       //스크립트 작성
       const msg = "[[${msg}]]";
       if (msg) {
         alert(msg);
       }
     </script>
+    <script src="/js/list"></script>
   </th:block>
 </html>
