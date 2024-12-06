@@ -11,20 +11,19 @@ import com.example.mybatis.dto.PublisherDto;
 public interface BookService {
 
     // crud
-    Long create(BookDto dto);
+    boolean create(BookDto dto);
 
     BookDto getRow(Long id);
 
     List<BookDto> getList(PageRequestDto requestDto);
 
-    int getTotalCnt(PageRequestDto pageRequestDto);
+    int getTotalCnt(PageRequestDto requestDto);
 
-    Long update(BookDto dto);
+    boolean update(BookDto dto);
 
-    void delete(Long id);
+    boolean delete(Long id);
 
     List<CategoryDto> getCateList();
 
     List<PublisherDto> getPubList();
-
 }

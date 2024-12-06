@@ -75,7 +75,6 @@ public class MemoRestController {
         memoService.delete(mno);
 
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-
     }
 
 }

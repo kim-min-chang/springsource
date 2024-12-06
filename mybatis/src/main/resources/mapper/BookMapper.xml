@@ -6,68 +6,101 @@
 
 <mapper namespace="com.example.mybatis.mapper.BookMapper">
 
-  <select id="read" resultType="com.example.mtbatis.dto.BookDto">
-    select * from booktbl b where b.book_id = #{id}
-  </select>
-
-  <select id="listAll" resultType="com.example.mtbatis.dto.BookDto">
-    <![CDATA[
-    
-   SELECT t.book_id, t.title, t.publisher_id,t.publisher_name, t.category_id,t.category_name 
- FROM
-	(
-	SELECT
-		rownum rn,
-		b1.*
-	FROM
-		(
-		SELECT
-			*
-		FROM
-			BOOKTBL b
-		JOIN PUBLISHER p ON
-			b.PUBLISHER_PUBLISHER_ID = p.PUBLISHER_ID
-		JOIN CATEGORY c ON
-			b.CATEGORY_CATEGORY_ID = c.CATEGORY_ID
-		WHERE
-			b.BOOK_ID > 0
-		ORDER BY
-			b.BOOK_ID DESC) b1
-	WHERE
-    ]]>
-        <include refid="criteria"></include>
-        <![CDATA[
-	        rownum <= (#{page}*{size})) t
-        WHERE
-	        rn>(#{page}-1)*#{size}    
-        ]]>
-  </select>
-
-    <select id="totalCnt" resultType="com.example.mtbatis.dto.BookDto">
-    SELECT count(*) 
-    FROM booktbl 
-    WHERE 
-        <include refid="criteria"></include>
-        book_id > 0
-
+    <select id="categories" resultType="com.example.mybatis.dto.CategoryDto">
+        select c.category_id as id, c.category_name 
+        from CATEGORY c      
     </select>
 
-    <sql id="criteria">
-        <trim prefix="(" suffix=") AND" prefixOverrides="OR">
-            <trim prefix="OR">
-              <choose>
-                <when test="type != 't'.toString()">
-                    title like '%' ||#{keyword}||'%'
+    <select id="publishers" resultType="com.example.mybatis.dto.PublisherDto">
+        select  p.publisher_id as id, p.publisher_name
+        from PUBLISHER p 
+    </select>
+
+    <insert id="create">
+        insert into booktbl(book_id,title,writer,price,sale_price,CREATED_DATE_TIME,LAST_MODIFIED_DATE_TIME)
+        values  (book_seq.nextval,#{title},#{writer},#{price},#{sale_price},current_timestamp,#{categoryName},#{publisherName})
+    </insert>
+
+    <update id="update">
+    update booktbl
+    set price = #{price}, sale_price = #{salePrice}, LAST_MODIFIED_DATE_TIME = current_timestamp
+    where book_id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from booktbl
+        where book_id = #{id}
+    </delete>
+
+  <select id="read" resultType="com.example.mybatis.dto.BookDto">
+    select b.book_id as id, b.title, b.writer,b.price,b.SALE_PRICE,b.CREATED_DATE_TIME, p.publisher_id, p.publisher_name, c.category_id, c.category_name 
+    from booktbl b 
+        JOIN PUBLISHER p ON
+            b.PUBLISHER_PUBLISHER_ID = p.PUBLISHER_ID
+        JOIN CATEGORY c ON
+            b.CATEGORY_CATEGORY_ID = c.CATEGORY_ID 
+    where b.book_id = #{id}
+  </select>
+
+  <select id="listAll" resultType="com.example.mybatis.dto.BookDto">
+    
+    <![CDATA[
+        SELECT t.book_id as id, t.title, t.writer, t.publisher_id, t.publisher_name, t.category_id, t.category_name 
+        FROM (  SELECT
+                    rownum rn,
+                    b1.*
+                FROM
+                    (
+                    SELECT
+                        *
+                    FROM
+                        BOOKTBL b
+                    JOIN PUBLISHER p ON
+                        b.PUBLISHER_PUBLISHER_ID = p.PUBLISHER_ID
+                    JOIN CATEGORY c ON
+                        b.CATEGORY_CATEGORY_ID = c.CATEGORY_ID
+                    WHERE
+                        b.BOOK_ID > 0
+                    ORDER BY
+                        b.BOOK_ID DESC) b1
+                WHERE
+    ]]>
+        <include refid="criteria"></include>
+    <![CDATA[
+                rownum <= (#{page} * #{size})) t
+            WHERE
+                rn > (#{page} - 1) * #{size}            
+    ]]>
+  </select>
+
+  <select id="totalCnt" resultType="int">
+    SELECT count(*) 
+    FROM booktbl b 
+    JOIN PUBLISHER p ON
+        b.PUBLISHER_PUBLISHER_ID = p.PUBLISHER_ID
+    JOIN CATEGORY c ON
+        b.CATEGORY_CATEGORY_ID = c.CATEGORY_ID
+    WHERE 
+        <include refid="criteria"></include> 
+        book_id > 0
+  </select>
+
+  <sql id="criteria">
+    <trim prefix="("  suffix=") AND"  prefixOverrides="OR">
+        <trim prefix="OR">
+            <choose>
+                <when test="type == 't'.toString()">
+                    title like '%'||#{keyword}||'%'
                 </when>
-                <when test="type != 'c'.toString()">
-                    CATEGORY_NAME like '%' ||#{keyword}||'%'
+                <when test="type == 'c'.toString()">
+                    CATEGORY_NAME like '%'||#{keyword}||'%'
                 </when>
-                <otherwise>
-                    writer like '%' ||#{keyword}||'%'
-                </otherwise>
-              </choose>
-            </trim>
+                <when test="type == 'w'.toString()">
+                    writer like '%'||#{keyword}||'%'
+                </when>
+            </choose>
         </trim>
-    </sql>
+    </trim>
+  </sql>
 
 </mapper>

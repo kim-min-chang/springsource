@@ -1,15 +1,12 @@
 package com.example.mybatis.service;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.mybatis.dto.BookDto;
 import com.example.mybatis.dto.CategoryDto;
 import com.example.mybatis.dto.PageRequestDto;
-import com.example.mybatis.dto.PageResultDto;
 import com.example.mybatis.dto.PublisherDto;
 import com.example.mybatis.mapper.BookMapper;
 
@@ -24,34 +21,34 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public Long create(BookDto dto) {
-        return null;
+    public boolean create(BookDto dto) {
+
+        return bookMapper.create(dto) == 1 ? true : false;
     }
 
     @Override
     public BookDto getRow(Long id) {
-        return null;
+        return bookMapper.read(id);
     }
 
     @Override
-    public Long update(BookDto dto) {
-
-        return null;
+    public boolean update(BookDto dto) {
+        return bookMapper.update(dto) == 1 ? true : false;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public boolean delete(Long id) {
+        return bookMapper.delete(id) == 1 ? true : false;
     }
 
     @Override
     public List<CategoryDto> getCateList() {
-        return null;
+        return bookMapper.categorys();
     }
 
     @Override
     public List<PublisherDto> getPubList() {
-        return null;
+        return bookMapper.publishers();
     }
 
     @Override
@@ -60,9 +57,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int getTotalCnt(PageRequestDto pageRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTotalCnt'");
+    public int getTotalCnt(PageRequestDto requestDto) {
+        return bookMapper.totalCnt(requestDto);
     }
 
 }
